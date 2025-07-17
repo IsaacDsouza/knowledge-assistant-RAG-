@@ -24,15 +24,64 @@ This assistant enables enterprise users to chat with internal knowledge, generat
 
 ## Architecture
 
+**System Overview:**
 
-graph TD
-  A[React Frontend (MUI, TS)] -- REST/WS --> B[FastAPI Backend]
-  B -- Embeddings/LLM --> C[Azure OpenAI]
-  B -- Vector Search --> D[Chroma]
-  B -- User/Chat Data --> E[MongoDB Atlas]
-  B -- Auth --> E
-  B -- Static Files --> A
+- **Frontend:**  
+  React (TypeScript, Material-UI)  
+  ↳ Communicates with backend via REST API and WebSockets
 
+- **Backend:**  
+  FastAPI (Python)  
+  ↳ Handles business logic, authentication, and API endpoints  
+  ↳ Serves static files (React build)
+
+- **LLM & Embeddings:**  
+  Azure OpenAI  
+  ↳ Used by backend for chat, RAG, and NL2SQL
+
+- **Vector Database:**  
+  Chroma  
+  ↳ Stores and retrieves document embeddings for RAG
+
+- **User & Chat Data:**  
+  MongoDB Atlas  
+  ↳ Stores user accounts, authentication, and chat history
+
+---
+
+**Data Flow:**
+
+1. **User interacts with the React frontend** (chat, NL2SQL, document upload).
+2. **Frontend sends requests to FastAPI backend** (REST/WebSocket).
+3. **Backend processes requests:**
+   - For chat/RAG:  
+     - Retrieves relevant document chunks from Chroma (vector search).
+     - Calls Azure OpenAI for LLM responses and embeddings.
+   - For NL2SQL:  
+     - Generates SQL from natural language (mocked or real).
+   - For ingestion:  
+     - Chunks and embeds documents, stores in Chroma.
+   - For authentication and chat history:  
+     - Reads/writes user and chat data in MongoDB Atlas.
+4. **Backend returns results to the frontend** for display.
+
+---
+
+**Component Diagram (Textual):**
+
+```
+[User]
+   │
+   ▼
+[React Frontend]
+   │  REST/WS
+   ▼
+[FastAPI Backend] ──→ [Azure OpenAI] (LLM/Embeddings)
+      │
+      ├──→ [Chroma] (Vector DB)
+      │
+      └──→ [MongoDB Atlas] (User & Chat Data)
+```
 
 ---
 
