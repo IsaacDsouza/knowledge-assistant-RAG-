@@ -48,5 +48,6 @@ htmlcov/
 pytest_cache/
 
 # Chroma/Redis (if any local data)
+chroma_db/
 chroma_data/
 redis_data/
