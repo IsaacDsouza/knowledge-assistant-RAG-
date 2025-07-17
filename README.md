@@ -24,7 +24,7 @@ This assistant enables enterprise users to chat with internal knowledge, generat
 
 ## Architecture
 
-```mermaid
+
 graph TD
   A[React Frontend (MUI, TS)] -- REST/WS --> B[FastAPI Backend]
   B -- Embeddings/LLM --> C[Azure OpenAI]
@@ -32,7 +32,7 @@ graph TD
   B -- User/Chat Data --> E[MongoDB Atlas]
   B -- Auth --> E
   B -- Static Files --> A
-```
+
 
 ---
 
