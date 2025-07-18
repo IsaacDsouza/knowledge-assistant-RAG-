@@ -1,16 +1,24 @@
 # Enterprise Knowledge Assistant
 
+[![Backend Deployed on Azure](https://img.shields.io/badge/Azure-Backend%20Live-blue?logo=azure)](https://isaac-knowledge-asst-2024.azurewebsites.net/docs)
+
 A fullstack, production-ready enterprise knowledge assistant. Built with FastAPI, React, Azure OpenAI, MongoDB Atlas, and Chroma, it supports RAG, NL2SQL, multi-modal ingestion, and user authentication.
 
 ---
 
-##  Project Overview
+##  Live Backend
 
-This assistant enables enterprise users to chat with internal knowledge, generate SQL from natural language, and ingest documents (text, PDF, images, audio) for retrieval-augmented generation (RAG). It features secure authentication, chat history, and a modern, responsive UI.
+- **API & Docs:** [https://isaac-knowledge-asst-2024.azurewebsites.net/docs](https://isaac-knowledge-asst-2024.azurewebsites.net/docs)
 
 ---
 
-##  Features
+## Project Overview
+
+This assistant enables enterprise users to chat with internal knowledge, generate SQL from natural language, and ingest documents (text, PDF, images, audio) for retrieval-augmented generation (RAG). It features secure authentication, chat history, and a modern, responsive UI with the help of Redis, Azure containers, Azure OpenAI.
+
+---
+
+## Features
 - **Chat with Knowledge Base (RAG)**
 - **NL2SQL**: Natural language to SQL (mocked for demo)
 - **Document Ingestion**: PDF, text, images, audio
@@ -40,7 +48,7 @@ This assistant enables enterprise users to chat with internal knowledge, generat
   ↳ Used by backend for chat, RAG, and NL2SQL
 
 - **Vector Database:**  
-  Chroma  
+  Chroma  and Redis
   ↳ Stores and retrieves document embeddings for RAG
 
 - **User & Chat Data:**  
@@ -78,47 +86,48 @@ This assistant enables enterprise users to chat with internal knowledge, generat
    ▼
 [FastAPI Backend] ──→ [Azure OpenAI] (LLM/Embeddings)
       │
-      ├──→ [Chroma] (Vector DB)
+      ├──→ [Redis/Chroma] (Vector DB)
       │
       └──→ [MongoDB Atlas] (User & Chat Data)
 ```
 
 ---
 
-##  Tech Stack
-- **Frontend**: React, TypeScript, Material-UI
-- **Backend**: FastAPI, LangChain, PyPDF2, JWT
-- **LLM/Embeddings**: Azure OpenAI
-- **Vector DB**: Chroma (fallback from Redis)
-- **Database**: MongoDB Atlas
-- **Containerization**: Docker, Docker Compose
-- **Deployment**: Azure Web App for Containers / Container Apps
+##  Containerization & Azure Deployment
+
+This project is fully containerized using **Docker** for seamless deployment and scalability.
+
+### **Containerization**
+- The backend (FastAPI) and frontend (React) are built into a single Docker image.
+- The React app is built and served as static files by FastAPI.
+- All dependencies are managed via `requirements.txt` (Python) and `package.json` (Node/React).
+
+### **Azure Deployment**
+- The Docker image is pushed to **Azure Container Registry (ACR)**.
+- The backend is deployed using **Azure Web App for Containers**, which pulls the image from ACR and runs it as a managed service.
+- Environment variables (secrets, API keys, DB URIs) are securely managed in the Azure Portal.
+- MongoDB Atlas IP whitelisting ensures secure database connectivity.
+- The backend is accessible at [https://isaac-knowledge-asst-2024.azurewebsites.net](https://isaac-knowledge-asst-2024.azurewebsites.net).
+
+#### **Deployment Steps (Summary):**
+1. **Build Docker image:**
+   ```sh
+   docker build -t ai-asst:latest .
+   ```
+2. **Tag and push to ACR:**
+   ```sh
+   docker tag ai-asst:latest aiasstproj.azurecr.io/ai-asst:latest
+   docker push aiasstproj.azurecr.io/ai-asst:latest
+   ```
+3. **Configure Azure Web App for Containers:**
+   - Set image source to ACR
+   - Set registry credentials
+   - Set environment variables
+   - Restart the app after each deployment
 
 ---
 
-##  Setup & Deployment
-
-### 1. Clone & Configure
-```sh
-git clone https://github.com/<your-username>/<repo-name>.git
-cd ai-asst
-cp .env.example .env  # Edit with your secrets
-```
-
-### 2. Build & Run (Docker Compose)
-```sh
-docker-compose up --build
-```
-
-### 3. Deploy to Azure
-- Build and push Docker image to Azure Container Registry (ACR)
-- Deploy via Azure Web App for Containers or Container Apps
-- Set environment variables in Azure Portal
-- Whitelist Azure IPs in MongoDB Atlas
-
----
-
-##  Environment Variables
+## Environment Variables
 
 Example `.env`:
 ```
@@ -135,7 +144,7 @@ CHROMA_PERSIST_DIRECTORY=chroma_data
 
 ---
 
-##  Usage
+## Usage
 - **Chat**: Ask questions, retrieve knowledge, view chat history
 - **NL2SQL**: Enter natural language, get SQL (mocked)
 - **Ingest**: Upload documents for RAG
@@ -143,4 +152,11 @@ CHROMA_PERSIST_DIRECTORY=chroma_data
 
 ---
 
+## UI
+
+![App Screenshot](Screenshot(30).png)
+
+---
+
+## License
 [MIT](LICENSE) 

@@ -103,7 +103,7 @@ function MainApp() {
           </Box>
         </Paper>
         <Box mt={2} textAlign="center">
-          <Typography variant="caption" color="textSecondary">Enterprise Knowledge Assistant Demo</Typography>
+          <Typography variant="caption" color="textSecondary">isaacdsouza0809@gmail.com</Typography>
         </Box>
       </Box>
     </Box>
