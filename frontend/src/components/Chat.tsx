@@ -18,11 +18,13 @@ const Chat: React.FC = () => {
   const { token, logout } = useAuth();
   const theme = useTheme();
 
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+
   // Load chat history on mount
   useEffect(() => {
     (async () => {
       if (!token) return;
-      const res = await fetch('http://localhost:8000/get_chats', {
+      const res = await fetch(`${API_URL}/get_chats`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -41,7 +43,7 @@ const Chat: React.FC = () => {
   useEffect(() => {
     if (messages.length === 0 || !token) return;
     if (messages[messages.length - 1].role === 'assistant') {
-      fetch('http://localhost:8000/save_chat', {
+      fetch(`${API_URL}/save_chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +59,7 @@ const Chat: React.FC = () => {
     setMessages((msgs) => [...msgs, { role: 'user', content: input }]);
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/query', {
+      const response = await fetch(`${API_URL}/query`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

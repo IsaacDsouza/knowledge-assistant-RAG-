@@ -14,6 +14,8 @@ const Ingest: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
 
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+
   const handleUpload = async () => {
     if (!file) return;
     setLoading(true);
@@ -22,7 +24,7 @@ const Ingest: React.FC = () => {
     formData.append('file', file);
     formData.append('doc_type', docType);
     try {
-      const response = await fetch('http://localhost:8000/ingest', {
+      const response = await fetch(`${API_URL}/ingest`, {
         method: 'POST',
         body: formData,
       });

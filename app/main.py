@@ -15,7 +15,7 @@ app = FastAPI()
 # Allow CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For dev, allow all. For prod, restrict to your frontend URL.
+    allow_origins=["https://your-vercel-app.vercel.app","http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -51,7 +51,8 @@ const NL2SQL: React.FC = () => {
     setSQL('');
     setResult(null);
     try {
-      const response = await fetch('http://localhost:8000/nl2sql', {
+      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${API_URL}/nl2sql`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
