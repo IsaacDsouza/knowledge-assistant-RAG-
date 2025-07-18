@@ -2,7 +2,7 @@
 
 [![Backend Deployed on Azure](https://img.shields.io/badge/Azure-Backend%20Live-blue?logo=azure)](https://isaac-knowledge-asst-2024.azurewebsites.net/docs)
 
-A fullstack, production-ready enterprise knowledge assistant. Built with FastAPI, React, Azure OpenAI, MongoDB Atlas, and Chroma, it supports RAG, NL2SQL, multi-modal ingestion, and user authentication.
+A fullstack, production-ready enterprise knowledge assistant. Built with FastAPI, React, Azure OpenAI, MongoDB Atlas, Redis, and Chroma, it supports RAG, NL2SQL, multi-modal ingestion, and user authentication.
 
 ---
 
@@ -140,6 +140,7 @@ MONGODB_URI=...
 MONGODB_DB=ai-asst
 JWT_SECRET=...
 CHROMA_PERSIST_DIRECTORY=chroma_data
+REDIS_URL=...
 ```
 
 ---
