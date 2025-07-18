@@ -153,11 +153,6 @@ REDIS_URL=...
 
 ---
 
-## UI
-
-![App Screenshot](Screenshot(30).png)
-
----
 
 ## License
 [MIT](LICENSE) 
