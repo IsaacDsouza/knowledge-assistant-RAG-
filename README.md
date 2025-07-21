@@ -98,9 +98,9 @@ This assistant enables enterprise users to chat with internal knowledge, generat
 This project is fully containerized using **Docker** for seamless deployment and scalability.
 
 ### **Containerization**
-- The backend (FastAPI) and frontend (React) are built into a single Docker image.
-- The React app is built and served as static files by FastAPI.
-- All dependencies are managed via `requirements.txt` (Python) and `package.json` (Node/React).
+- The backend (FastAPI) is built and run from the provided Dockerfile.
+- To run the frontend, you must build and serve it separately (e.g., using `npm start` for development or deploying the `build` output to a static host).
+- All backend dependencies are managed via `requirements.txt` (Python), and frontend dependencies via `package.json` (Node/React).
 
 ### **Azure Deployment**
 - The Docker image is pushed to **Azure Container Registry (ACR)**.
